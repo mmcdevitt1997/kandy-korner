@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-export default class storeList extends Component{
+export default class StoreList extends Component{
     render(){
         return (
-            <section className="store">
+            <section className="stores">
             {
-             this.props.store.map(stores =>
-                <div key={stores.id}>
-                <p>{stores.name}</p>
+             this.props.stores.map(store =>
+                <div key={store.id}>
+                <p>{store.location}</p>
                 </div>
              )
             }
