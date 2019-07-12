@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 
-export default class employeeList extends Component{
+export default class EmployeeList extends Component{
     render(){
         return (
-            <section className="employee">
+            <section className="employees">
             {
-             this.props.employee.map(employees =>
-                <div key={employees.id}>
-                <p>{employeess.name}</p>
+             this.props.employees.map(employee =>
+                <div key={employee.id}>
+                <p>{employee.name}</p>
                 </div>
              )
             }
