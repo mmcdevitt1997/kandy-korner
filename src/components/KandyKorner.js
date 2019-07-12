@@ -1,4 +1,11 @@
 
+// import { Route } from 'react-router-dom'
+import React, { Component } from "react"
+import candyList from './candy-types'
+import LocationList from './location/LocationList'
+import employeeList from './employee/employeeList'
+import candiesList from "./owner/OwnerList"
+
 
 storeLocationsData = [
     {
@@ -8,7 +15,7 @@ storeLocationsData = [
     }
 ]
 
-EmployeesData = [
+employeesData = [
     {
         id: 1, name: "Alex",
         id: 2,  name: "Same",
@@ -31,7 +38,7 @@ candiesData = [
 ]
 state = {
     stores: storeLocationsData,
-    employees: EmployeesData ,
+    employees: employeesData ,
     candyTypes: candyTypeData ,
     candies: candiesData
 }
@@ -39,13 +46,12 @@ state = {
 render(){
     return(
         <article>
-                <h2>Store Locations</h2>
-                <LocationList locations={this.state.locations} />
-                 <h2>Employees</h2>
-                <EmployeeList employees={this.state.employees} />
-                <h2>Candy Types</h2>
-                <AnimalList animals={this.state.animals}/>
-                <h2>candies</h2>
+                <h2>Store Location</h2>
+                < LocationLis locations={this.state.locations} />
+                 <h2>Candy Types</h2>
+                <candiesList candy={this.state.candies} />
+                <h2>Employee</h2>
+                <employeeList employees={this.state.employees} />
             </article>
     )
 }
