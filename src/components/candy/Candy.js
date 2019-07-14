@@ -9,12 +9,6 @@ export default class CandyList extends Component{
              this.props.candys.map(candy =>
                 <div key={candy.id}>
                 <p>{candy.name}</p>
-                of candyType
-                {
-                this.props.candyType
-                    .find(candyTypes.id)
-                    .name
-            }
                 </div>
              )
             }
