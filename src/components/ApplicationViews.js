@@ -1,66 +1,70 @@
 import React, { Component } from "react"
 import { Route } from 'react-router-dom'
+import employeeHandler from "../api-handlers/employeeHandler"
+import storeHandler from "../api-handlers/storeHandler"
+import candyHandler from "../api-handlers/candyHandler"
 import CandyList from './candy/Candy'
 import StoreList from "./store-locations/storeList"
-import EmployeeList from './employees/employeeList'
-import CandyType from "./candy/candy-type/CandyType"
+import EmployeeList from "./employees/EmployeeList"
+
 
 
 export default class ApplicationViews extends Component {
-
-        storeLocationsData = [
-
-                { id: 1, location: "fake address 1" },
-                { id: 2, location: "fake address 2" },
-                { id: 3, location: "fake address 3 " }
-
-        ]
-
-        employeesData = [
-
-                { id: 1, name: "Alex" },
-                { id: 2, name: "Same" },
-                { id: 3, name: "Jeff " }
-
-        ]
-        candyTypeData = [
-
-                { id: 1, candyType: "candyType 1" },
-                { id: 2, candyType: "candyType 2" },
-                { id: 3, candyType: "candyType 3 " }
-
-        ]
-        candyData = [
-
-                { id: 1, name: "candy 1", CandyTypeID:1},
-                { id: 2, name: "candy 2", CandyTypeID:2},
-                { id: 3, name: "candy 3", CandyTypeID:3}
-
-        ]
         state = {
-                stores: this.storeLocationsData,
-                employees: this.employeesData,
-                candys: this.candyData,
-                candyType: this.candyTypeData
+                stores: [],
+                candys: [],
+                employees: []
+        }
+
+        componentDidMount() {
+                const newState = {}
+                employeeHandler.getAll().then(allEmployees => {
+                        this.setState({
+                                employees: allEmployees
+                        })
+                })
+                candyHandler.getAll().then(allcandys => {
+                        this.setState({
+                                candys: allcandys
+                        })
+                })
+                storeHandler.getAll().then(allStores => {
+                        this.setState({
+                                stores: allStores
+                        })
+                })
+
+        }
+        deleteEmployee = id =>{ employeeHandler.delete(id)
+        .then(() => employeeHandler.getAll())
+        .then(employees => {
+                console.log(employees)
+                this.setState({ employees: employees})
+        })
+
+
+
         }
 
         render() {
                 return (
                         <React.Fragment>
-                                <Route exact path="/" render={(props)=>{
-                                return <StoreList stores={this.state.stores}/>
-                                }}/>
-                                 {/* <Route render={(props)=>{return <CandyType candyTypes= {this.state.candyTypes}/> */}
-                                 <Route exact path="/candy" render={(props)=>{
-                                return <CandyList candys={this.state.candys}/>
-                                }}/>
-                                <Route exact path="/employees" render={(props)=>{
-                                return <EmployeeList employees={this.state.employees}/>
-                                }}/>
+                                <Route exact path="/" render={(props) => {
+                                        return <StoreList stores={this.state.stores} />
+                                }} />
+                                {/* <Route render={(props)=>{return <CandyType candyTypes= {this.state.candyTypes}/> */}
+                                <Route exact path="/candy" render={(props) => {
+                                        return <CandyList candys={this.state.candys} />
+                                }} />
+                                <Route exact path="/employees" render={(props) => {
+                                        return < EmployeeList employees={this.state.employees}
+                                        deleteEmployee={this.deleteEmployee} />
+                                }} />
 
                         </React.Fragment>
 
                 )
         }
+
 }
 

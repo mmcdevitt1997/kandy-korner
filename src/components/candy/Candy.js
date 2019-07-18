@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {CandyType} from "./candy-type/CandyType"
+import "./Candy.css"
 
 export default class CandyList extends Component{
     render(){

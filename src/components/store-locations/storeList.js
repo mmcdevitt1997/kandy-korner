@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import "./Store.css"
 
 export default class StoreList extends Component{
     render(){
