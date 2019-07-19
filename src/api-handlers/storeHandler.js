@@ -10,6 +10,11 @@ getAll: {
     value: function (){
         return apiManager.all("stores")
     }
+},
+delete: {
+  value: function(id){
+      return apiManager.delete("stores", id)
+  }
 }
 
 })

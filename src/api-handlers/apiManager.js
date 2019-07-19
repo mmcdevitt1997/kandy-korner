@@ -19,6 +19,18 @@ export default Object.create(null, {
            }).then(e => e.json())
        }
    },
+   post: {
+       value: function (resource, newData){
+           return fetch (`${remoteURL}/${resource}`,{
+               method: "POST",
+               headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(newData)
+           }).then(e => e.json())
+       }
+   },
+
    search: {
        value: function (resource, id) {
            return fetch(`${remoteURL}/${resource}/${id}`).then(data => data.json())

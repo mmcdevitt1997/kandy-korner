@@ -3,14 +3,6 @@
     {
       "id": 1,
       "location": "fake address 1"
-    },
-    {
-      "id": 2,
-      "location": "fake address 2"
-    },
-    {
-      "id": 3,
-      "location": "fake address 3 "
     }
   ],
   "employees": [
@@ -19,35 +11,24 @@
       "name": "John"
     }
   ],
-  "CandyTypes": [
+  "candyTypes": [
     {
       "id": 1,
-      "candyType": "candyType 1"
+      "name": "candyType 1"
     },
     {
       "id": 2,
-      "candyType": "candyType 2"
+      "name": "candyType 2"
     },
     {
       "id": 3,
-      "candyType": "candyType 3 "
+      "name": "candyType 3 "
     }
   ],
   "candys": [
     {
-      "id": 1,
-      "name": "candy 1",
-      "CandyTypeID": 1
-    },
-    {
-      "id": 2,
-      "name": "candy 2",
-      "CandyTypeID": 2
-    },
-    {
-      "id": 3,
-      "name": "candy 3",
-      "CandyTypeID": 3
+      "name": "hello there",
+      "id": 1
     }
   ]
 }

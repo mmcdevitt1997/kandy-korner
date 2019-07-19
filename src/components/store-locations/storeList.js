@@ -9,6 +9,8 @@ export default class StoreList extends Component{
              this.props.stores.map(store =>
                 <div key={store.id}>
                 <p>{store.location}</p>
+                <button onClick={() => this.props.deleteStore(store.id)}
+                 className="card-link">Delete</button>
                 </div>
              )
             }

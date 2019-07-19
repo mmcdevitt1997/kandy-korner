@@ -14,7 +14,10 @@ import React, { Component } from "react"
                         <Link className="nav-link" to="/employees">Employees</Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link" to="/candy">Candy</Link>
+                        <Link className="nav-link" to="/candys">Candy</Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/candyTypes">Candy Types</Link>
                     </li>
                 </ul>
             </nav>
