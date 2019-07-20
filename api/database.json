@@ -27,8 +27,12 @@
   ],
   "candys": [
     {
-      "name": "hello there",
+      "name": "hello",
       "id": 1
+    },
+    {
+      "name": "dgsjio",
+      "id": 2
     }
   ]
 }
