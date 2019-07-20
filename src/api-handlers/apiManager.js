@@ -30,6 +30,17 @@ export default Object.create(null, {
            }).then(e => e.json())
        }
    },
+   put: {
+       value: function (resource, editData){
+           return fetch (`${remoteURL}/${resource}/${editData.id}`,{
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(editData)
+           }).then(e => e.json())
+       }
+   },
 
    search: {
        value: function (resource, id) {

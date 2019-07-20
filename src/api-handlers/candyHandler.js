@@ -20,6 +20,11 @@ post: {
     value: function(newData){
         return apiManager.post("candys",newData)
     }
+},
+put: {
+    value: function(editData){
+    return apiManager.put("candys",editData)
+    }
 }
 
 })

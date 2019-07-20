@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import { Link } from "react-router-dom"
 
 export default class CandyDetail extends Component {
     state = {
@@ -6,7 +7,8 @@ export default class CandyDetail extends Component {
     }
 
     render() {
-        console.log("heelo")
+      console.log(this.props.updateCandy)
+
       return (
         <section className="candys">
           <div key={ this.props.candy.id } className="card">
@@ -25,6 +27,19 @@ export default class CandyDetail extends Component {
                   }
                   disabled={ this.state.saveDisabled }
                   className="card-link">Delete</button>
+                    <Link className="nav-link" to={`/candys/${this.props.candy.id}/edit`}>Edit</Link>
+
+                  <button onClick={
+                      () => {
+                          this.setState(
+                              () => this.props.updateCandy(this.props.candy.id)
+
+
+                          )
+                      }
+                  }
+                  disabled={ this.state.saveDisabled }
+                  className="card-link" to={`/candys/${this.props.candy.id}/edit`}>Edit</button>
             </div>
           </div>
         </section>
