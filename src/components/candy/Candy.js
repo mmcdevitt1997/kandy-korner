@@ -1,18 +1,34 @@
 import React, { Component } from 'react'
+import CandyCard from "./CandyCard"
 import "./Candy.css"
 
-export default class CandyList extends Component{
-    render(){
+
+export default class CandyList extends Component {
+    render() {
         return (
-            <section className="candys">
-            {
-             this.props.candys.map(candy =>
-                <div key={candy.id}>
-                <p>{candy.name}</p>
+            <div>
+                <div className="candyButton">
+                    <button type="button"
+                        className="btn btn-success"
+                        onClick={() => {
+                            this.props.history.push("/candys/new")
+                        }
+                        }>Add Candy</button>
                 </div>
-             )
-            }
-            </section>
+
+                <section className="candys">
+
+                        {
+                            this.props.candys.map(candy =>
+                                <CandyCard key={candy.id} candy={candy} {...this.props} />
+                            )
+                        }
+
+
+                </section>
+            </div>
         )
     }
 }
+
+

@@ -1,11 +1,21 @@
 import React, { Component } from "react"
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import employeeHandler from "../api-handlers/employeeHandler"
 import storeHandler from "../api-handlers/storeHandler"
 import candyHandler from "../api-handlers/candyHandler"
+import candyTypeHandler from "../api-handlers/candyTypeHandler"
+import CandyType from "./candy-type/CandyType"
 import CandyList from './candy/Candy'
 import StoreList from "./store-locations/storeList"
 import EmployeeList from "./employees/EmployeeList"
+import CandyForm from "./candy/CandyForm"
+import CandyDetail from "./candy/CandyDetail"
+import CandyEditForm from "./candy/CandyEditForm"
+import CandyTypeForm from "./candy-type/CandyTypeForm"
+import Login from './authentication/Login'
+
+
+
 
 
 
@@ -13,7 +23,8 @@ export default class ApplicationViews extends Component {
         state = {
                 stores: [],
                 candys: [],
-                employees: []
+                employees: [],
+                candyTypes: []
         }
 
         componentDidMount() {
@@ -33,33 +44,129 @@ export default class ApplicationViews extends Component {
                                 stores: allStores
                         })
                 })
-
+                candyTypeHandler.getAll().then(allCandyTypes => {
+                        this.setState({
+                                candyTypes: allCandyTypes
+                        })
+                })
         }
-        deleteEmployee = id =>{ employeeHandler.delete(id)
-        .then(() => employeeHandler.getAll())
-        .then(employees => {
-                console.log(employees)
-                this.setState({ employees: employees})
-        })
-
-
-
+        // delete functions
+        deleteEmployee = id => {
+                employeeHandler.delete(id)
+                        .then(() => employeeHandler.getAll())
+                        .then(employees => {
+                                console.log(employees)
+                                this.setState({ employees: employees })
+                        })
         }
+        deleteStore = id => {
+                storeHandler.delete(id)
+                        .then(() => storeHandler.getAll())
+                        .then(stores => {
+                                console.log(stores)
+                                this.setState({ stores: stores })
+                        })
+        }
+        deleteCandy = id => {
+                candyHandler.delete(id)
+                        .then(() => candyHandler.getAll())
+                        .then(candys => {
+                                console.log(candys)
+                                this.setState({ candys: candys })
+                        })
+        }
+        deleteCandyType = id => {
+                candyTypeHandler.delete(id)
+                        .then(() => candyTypeHandler.getAll())
+                        .then(candyTypes => {
+                                console.log(candyTypes)
+                                this.setState({ candyTypes: candyTypes })
+                        })
+        }
+        // post functions
+        addCandy = candy => candyHandler.post(candy)
+                .then(() => candyHandler.getAll())
+                .then(candys =>
+                        this.setState({
+                                candys: candys
+                        })
+                )
+        addCandyType = candyType => candyTypeHandler.post(candyType)
+                .then(() => candyTypeHandler.getAll())
+                .then(candyTypes =>
+                        this.setState({
+                                candyTypes: candyTypes
+                        })
+                )
+
+        // put functions
+        updateCandy = candy => candyHandler.put(candy)
+                .then(() => candyHandler.getAll())
+                .then(candys => {
+                        this.setState({
+                                candys: candys
+                        })
+                })
+
+
+
+
+        // Check if credentials are in local storage
+        isAuthenticated = () => sessionStorage.getItem("credentials") !== null
+
 
         render() {
                 return (
                         <React.Fragment>
                                 <Route exact path="/" render={(props) => {
-                                        return <StoreList stores={this.state.stores} />
+                                        return <StoreList stores={this.state.stores}
+                                                deleteStore={this.deleteStore} />
                                 }} />
-                                {/* <Route render={(props)=>{return <CandyType candyTypes= {this.state.candyTypes}/> */}
-                                <Route exact path="/candy" render={(props) => {
-                                        return <CandyList candys={this.state.candys} />
+                                <Route exact path="/candyTypes" render={(props) => {
+                                        return <CandyType {...props} candyTypes={this.state.candyTypes}
+                                                deleteCandyType={this.deleteCandyType} />
                                 }} />
+                                <Route exact path="/candys" render={(props) => {
+                                        return <CandyList {...props} candys={this.state.candys}
+                                                deleteCandy={this.deleteCandy}
+                                                candyTypes={this.state.candyTypes} />
+                                }} />
+
                                 <Route exact path="/employees" render={(props) => {
-                                        return < EmployeeList employees={this.state.employees}
-                                        deleteEmployee={this.deleteEmployee} />
+                                        if (this.isAuthenticated()) {
+                                                return < EmployeeList employees={this.state.employees}
+                                                        deleteEmployee={this.deleteEmployee} />
+                                        } else return <Redirect to="/login" />
                                 }} />
+                                <Route path="/candys/new" render={(props) => {
+
+                                        return <CandyForm {...props} candys={this.state.candys} addCandy={this.addCandy} candyTypes={this.state.candyTypes} />
+                                }} />
+                                <Route path="/candyTypes/new" render={(props) => {
+
+                                        return <CandyTypeForm {...props}  addCandyType={this.addCandyType} candyTypes={this.state.candyTypes} />
+                                }} />
+                                <Route exact path="/candys/:candyId(\d+)" render={(props) => {
+                                        // Find the animal with the id of the route parameter
+                                        let candy = this.state.candys.find(candy =>
+                                                candy.id === parseInt(props.match.params.candyId)
+                                        )
+                                        // If the animal wasn't found, create a default one
+                                        if (!candy) {
+                                                candy = { id: 404, candyName: "404" }
+                                        }
+                                        return <CandyDetail {...props} candyTypes={this.state.candyTypes} updateCandy={this.updateCandy} deleteCandy={this.deleteCandy} candy={candy} />
+                                }} />
+                                <Route
+                                        path="/candys/:candyId(\d+)/edit" render={props => {
+                                                return <CandyEditForm {...props} updateCandy={this.updateCandy} />
+                                        }}
+                                />
+                                <Route path="/login" component={Login} />
+
+
+
+
 
                         </React.Fragment>
 
