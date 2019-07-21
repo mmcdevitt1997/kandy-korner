@@ -1,26 +1,27 @@
 import React, { Component } from 'react'
+import CandyTypeCard from "./CandyTypeCard"
 
 
  export default class CandyType extends Component{
      render(){
-        console.log(this.props.candyTypes)
         return (
+            <div>
+                <div className="candyTypeButton">
+                    <button type="button"
+                        className="btn btn-success"
+                        onClick={() => {
+                           this.props.history.push("/candyTypes/new")
+                        }
+                    }>Add Candy Type</button>
+                 </div>
             <section className="candyTypes">
             {
             this.props.candyTypes.map(candyType=>
-            <div key={candyType.id}>
-             <p>{candyType.name}</p>
-             <button type="button"
-                            className="btn btn-success"
-                            onClick={() => {
-                                this.props.history.push("/animals/new")}
-                            }>Add Candy Type </button>
-             <button onClick={() => this.props.deleteCandyType(candyType.id)}
-                 className="card-link">Delete</button>
-               </div>
+                <CandyTypeCard key={candyType.id} candyType={candyType} {...this.props} />
               )
             }
             </section>
+            </div>
        )
     }
 }

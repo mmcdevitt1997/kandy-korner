@@ -8,7 +8,7 @@ export default class CandyCard extends Component {
             <div key={this.props.candy.id} className="card">
                 <div className="card-body">
                     <h5 className="card-title">
-                        {this.props.candy.name}
+                        {this.props.candy.candyName}
                         <Link className="nav-link" to={`/candys/${this.props.candy.id}`}>Details</Link>
 
                         <button onClick={() => this.props.deleteCandy(this.props.candy.id)}

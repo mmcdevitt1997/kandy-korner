@@ -3,7 +3,9 @@ import candyHandler from "../../api-handlers/candyHandler"
 
 export default class CandyEditForm extends Component{
     state = {
-        name:""
+        nameCandy:"",
+        amount: "",
+        candyTypeId:""
     };
     handleFieldChange = evt => {
         const stateToChange = {};
@@ -16,7 +18,7 @@ export default class CandyEditForm extends Component{
           window.alert("Please name the candy");
         } else {
           const candy = {
-            name: this.state.name,
+            name: this.state.nameCandy,
             id: this.props.match.params.candyId,
           }
 
@@ -30,7 +32,7 @@ export default class CandyEditForm extends Component{
         candyHandler.get(this.props.match.params.candyId)
         .then(candy => {
           this.setState({
-            name: candy.name,
+            nameCandy: candy.nameCandy,
 
           });
         });
@@ -50,7 +52,7 @@ export default class CandyEditForm extends Component{
                   onChange={this.handleFieldChange}
                   id="name"
                   placeholder="Candy Name"
-                  value = {this.state.name}
+                  value = {this.state.candyName}
                 />
               </div>
               <button

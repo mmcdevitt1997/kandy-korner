@@ -11,6 +11,7 @@ import EmployeeList from "./employees/EmployeeList"
 import CandyForm from "./candy/CandyForm"
 import CandyDetail from "./candy/CandyDetail"
 import CandyEditForm from "./candy/CandyEditForm"
+import CandyTypeForm from "./candy-type/CandyTypeForm"
 import Login from './authentication/Login'
 
 
@@ -90,14 +91,22 @@ export default class ApplicationViews extends Component {
                                 candys: candys
                         })
                 )
+        addCandyType = candyType => candyTypeHandler.post(candyType)
+                .then(() => candyTypeHandler.getAll())
+                .then(candyTypes =>
+                        this.setState({
+                                candyTypes: candyTypes
+                        })
+                )
+
         // put functions
-       updateCandy = candy => candyHandler.put(candy)
-        .then(() => candyHandler.getAll())
-        .then(candys =>{
-                this.setState({
-                        candys: candys
+        updateCandy = candy => candyHandler.put(candy)
+                .then(() => candyHandler.getAll())
+                .then(candys => {
+                        this.setState({
+                                candys: candys
+                        })
                 })
-        })
 
 
 
@@ -114,12 +123,13 @@ export default class ApplicationViews extends Component {
                                                 deleteStore={this.deleteStore} />
                                 }} />
                                 <Route exact path="/candyTypes" render={(props) => {
-                                        return <CandyType candyTypes={this.state.candyTypes}
+                                        return <CandyType {...props} candyTypes={this.state.candyTypes}
                                                 deleteCandyType={this.deleteCandyType} />
                                 }} />
                                 <Route exact path="/candys" render={(props) => {
                                         return <CandyList {...props} candys={this.state.candys}
-                                                deleteCandy={this.deleteCandy} />
+                                                deleteCandy={this.deleteCandy}
+                                                candyTypes={this.state.candyTypes} />
                                 }} />
 
                                 <Route exact path="/employees" render={(props) => {
@@ -130,7 +140,11 @@ export default class ApplicationViews extends Component {
                                 }} />
                                 <Route path="/candys/new" render={(props) => {
 
-                                        return <CandyForm {...props} addCandy={this.addCandy} />
+                                        return <CandyForm {...props} candys={this.state.candys} addCandy={this.addCandy} candyTypes={this.state.candyTypes} />
+                                }} />
+                                <Route path="/candyTypes/new" render={(props) => {
+
+                                        return <CandyTypeForm {...props}  addCandyType={this.addCandyType} candyTypes={this.state.candyTypes} />
                                 }} />
                                 <Route exact path="/candys/:candyId(\d+)" render={(props) => {
                                         // Find the animal with the id of the route parameter
@@ -139,9 +153,9 @@ export default class ApplicationViews extends Component {
                                         )
                                         // If the animal wasn't found, create a default one
                                         if (!candy) {
-                                                candy = { id: 404, name: "404" }
+                                                candy = { id: 404, candyName: "404" }
                                         }
-                                        return <CandyDetail {...props} updateCandy={this.updateCandy}  deleteCandy={this.deleteCandy} candy={candy} />
+                                        return <CandyDetail {...props} candyTypes={this.state.candyTypes} updateCandy={this.updateCandy} deleteCandy={this.deleteCandy} candy={candy} />
                                 }} />
                                 <Route
                                         path="/candys/:candyId(\d+)/edit" render={props => {

@@ -13,26 +13,35 @@
   ],
   "candyTypes": [
     {
-      "id": 1,
-      "name": "candyType 1"
-    },
-    {
       "id": 2,
       "name": "candyType 2"
     },
     {
       "id": 3,
-      "name": "candyType 3 "
+      "name": "candyType 3 ",
+      "candyId": 6
+    },
+    {
+      "name": "heelo",
+      "id": 6
     }
   ],
   "candys": [
     {
-      "name": "hello",
-      "id": 1
+      "candyName": "hello",
+      "id": 1,
+      "candyTypeId": 3
     },
     {
-      "name": "aewf",
-      "id": 5
+      "candyName": "aewf",
+      "id": 5,
+      "candyTypeId": 3
+    },
+    {
+      "candyName": "shdaf",
+      "amount": "798",
+      "candyTypeId": 2,
+      "id": 7
     }
   ]
 }

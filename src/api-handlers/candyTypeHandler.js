@@ -17,8 +17,8 @@ delete: {
     }
 },
 post: {
-    value: function(){
-        return apiManager.post("candyTypes")
+    value: function(newData){
+        return apiManager.post("candyTypes",newData)
     }
 }
 
